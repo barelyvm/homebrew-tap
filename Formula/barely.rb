@@ -2,10 +2,10 @@
 class Barely < Formula
   desc "Memory friendly container manager for Docker"
   homepage "https://barely.dev"
-  url "https://releases.barely.dev/2026.11.07-c6c5637/barely-2026.11.07-c6c5637-darwin-arm64.tar.gz"
+  url "https://releases.barely.dev/2026.11.07-9d3f8da/barely-2026.11.07-9d3f8da-darwin-arm64.tar.gz"
   # Set here because Homebrew can't work out the version from the file name.
-  version "2026.11.07-c6c5637"
-  sha256 "e34cf3e87aab95d357f59bebdf088ea33a2b25d6f9464190e6ecd49678557a39"
+  version "2026.11.07-9d3f8da"
+  sha256 "fe3a2912a77aa03a4dbef63c0f66cb1f2774533405e8a64e1646a126cd69ec68"
 
   # The docker command and its compose and buildx plugins, which talk to the
   # Docker engine in Barely's VM. Homebrew keeps them in its own folder, so
@@ -19,13 +19,13 @@ class Barely < Formula
   # Three downloads, so Homebrew can fetch them at the same time: the barely
   # command, the Linux image the VM boots and the Mac app.
   resource "guest" do
-    url "https://releases.barely.dev/2026.11.07-c6c5637/barely-guest-2026.11.06.1507.tar.gz"
-    sha256 "e24c2cb9ea7c2f5668a76b3fd43b1181187fa597e6a1f1fba44c328234ae4437"
+    url "https://releases.barely.dev/2026.11.07-9d3f8da/barely-guest-2026.11.07.1331.tar.gz"
+    sha256 "cd87648ee4cc0fc9082c8c9062273bf941fd8d9bca9e1afac2cda472decefa2b"
   end
 
   resource "app" do
-    url "https://releases.barely.dev/2026.11.07-c6c5637/barely-app-2026.11.07-c6c5637-darwin-arm64.tar.gz"
-    sha256 "08109d5608b1ec0dd8de2a109e0adcdc80a29b7732746d06bd1257a95a0a8bd3"
+    url "https://releases.barely.dev/2026.11.07-9d3f8da/barely-app-2026.11.07-9d3f8da-darwin-arm64.tar.gz"
+    sha256 "01e36e30dd02b444212e424442bde4a473877681e4b7f481963cff0e759a3517"
   end
 
   def install
@@ -35,7 +35,7 @@ class Barely < Formula
     man1.install "share/man/man1/barely.1"
 
     resource("guest").stage do
-      (share/"barely/guest/2026.11.06.1507").install Dir["*"]
+      (share/"barely/guest/2026.11.07.1331").install Dir["*"]
     end
     # barely setup copies Barely.app to ~/Applications, where Spotlight finds it.
     resource("app").stage do
