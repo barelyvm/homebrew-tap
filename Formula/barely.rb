@@ -2,10 +2,10 @@
 class Barely < Formula
   desc "Memory friendly container manager for Docker"
   homepage "https://barely.dev"
-  url "https://releases.barely.dev/2026.11.07-9d3f8da/barely-2026.11.07-9d3f8da-darwin-arm64.tar.gz"
+  url "https://releases.barely.dev/2026.11.07-d4147b7/barely-2026.11.07-d4147b7-darwin-arm64.tar.gz"
   # Set here because Homebrew can't work out the version from the file name.
-  version "2026.11.07-9d3f8da"
-  sha256 "fe3a2912a77aa03a4dbef63c0f66cb1f2774533405e8a64e1646a126cd69ec68"
+  version "2026.11.07-d4147b7"
+  sha256 "dae50364dbd58a161fb813c47f5c05123572abb499c7cc40d91a6823cf456217"
 
   # The docker command and its compose and buildx plugins, which talk to the
   # Docker engine in Barely's VM. Homebrew keeps them in its own folder, so
@@ -19,13 +19,13 @@ class Barely < Formula
   # Three downloads, so Homebrew can fetch them at the same time: the barely
   # command, the Linux image the VM boots and the Mac app.
   resource "guest" do
-    url "https://releases.barely.dev/2026.11.07-9d3f8da/barely-guest-2026.11.07.1331.tar.gz"
+    url "https://releases.barely.dev/2026.11.07-d4147b7/barely-guest-2026.11.07.1331.tar.gz"
     sha256 "cd87648ee4cc0fc9082c8c9062273bf941fd8d9bca9e1afac2cda472decefa2b"
   end
 
   resource "app" do
-    url "https://releases.barely.dev/2026.11.07-9d3f8da/barely-app-2026.11.07-9d3f8da-darwin-arm64.tar.gz"
-    sha256 "01e36e30dd02b444212e424442bde4a473877681e4b7f481963cff0e759a3517"
+    url "https://releases.barely.dev/2026.11.07-d4147b7/barely-app-2026.11.07-d4147b7-darwin-arm64.tar.gz"
+    sha256 "d29abe37e9dbdd03539507cd317df23af7b290284102357121af550220987d48"
   end
 
   def install
@@ -51,12 +51,5 @@ class Barely < Formula
            "--entitlements", libexec/"barely.entitlements", libexec/"barelyvm"
     system "codesign", "--sign", "-", "--force",
            "--entitlements", libexec/"barely.entitlements", prefix/"Barely.app"
-  end
-
-  def caveats
-    <<~EOS
-      Finish the install, which also puts Barely.app in ~/Applications:
-        barely setup
-    EOS
   end
 end
