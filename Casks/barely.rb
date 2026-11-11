@@ -3,10 +3,10 @@
 # Spotlight and Launchpad find it, and the app finishes the install when it is
 # first opened. A formula can only write inside Homebrew's own folder.
 cask "barely" do
-  version "2026.11.09-aaa63d3"
-  sha256 "99be1a261bd8fe1bd4da32670e0a5117d667502dd43e87d7f04e31021d214a86"
+  version "2026.11.12-7f96a06"
+  sha256 "06637f4964fcf9b561f6acb4fbf8e836288d5dcd910345a0d9fc21899af9e763"
 
-  url "https://releases.barely.dev/2026.11.09-aaa63d3/barely-app-2026.11.09-aaa63d3-darwin-arm64.tar.gz"
+  url "https://releases.barely.dev/2026.11.12-7f96a06/barely-app-2026.11.12-7f96a06-darwin-arm64.tar.gz"
   name "Barely"
   desc "Memory friendly container manager for Docker"
   homepage "https://barely.dev"
@@ -49,12 +49,12 @@ cask "barely" do
   # Homebrew runs this on brew upgrade as well as brew uninstall: the engine
   # stops and barely is unwired, keeping your images, containers and volumes,
   # and on an upgrade the postflight above wires the new version in again.
-  # barely uninstall records which Docker switches were on, and barely setup
+  # barely remove records which Docker switches were on, and barely setup
   # puts them back.
   uninstall quit:   "dev.barely.desktop",
             script: {
               executable: "#{appdir}/Barely.app/Contents/Resources/barely/bin/barely",
-              args:       ["uninstall", "-keep", "-quiet"],
+              args:       ["remove", "-quiet"],
             }
 
   # brew uninstall --zap: also the VM's disk, with every image, container and
