@@ -3,10 +3,10 @@
 # Spotlight and Launchpad find it, and the app finishes the install when it is
 # first opened. A formula can only write inside Homebrew's own folder.
 cask "barely" do
-  version "2026.11.14-c2a1221"
-  sha256 "d970b0b8eb62b25ae06be8865f704bd13fa24508e4c7648c5ee1f4170fbfa356"
+  version "2026.11.19-1af2506"
+  sha256 "e4034d74cafcf1913c224b30ef0db5b328a97acc505ba0c6959cbb0927ad48c6"
 
-  url "https://releases.barely.dev/2026.11.14-c2a1221/barely-app-2026.11.14-c2a1221-darwin-arm64.tar.gz"
+  url "https://releases.barely.dev/2026.11.19-1af2506/barely-app-2026.11.19-1af2506-darwin-arm64.tar.gz"
   name "Barely"
   desc "Memory friendly container manager for Docker"
   homepage "https://barely.dev"
@@ -30,7 +30,8 @@ cask "barely" do
   # command run, as they do from a formula, which is never marked.
   # Then barely setup wires barely in where it is installed: the launchd agent
   # that starts the engine on the first docker command, and the docker
-  # context. barely runs from inside the app; nothing is copied out of it.
+  # context. It never writes your shell profile, which is yours. barely runs
+  # from inside the app; nothing is copied out of it.
   # Homebrew runs these steps sandboxed, writing only to the paths each step
   # names, and with a throwaway HOME, which setup -no-load sets aside for the
   # account's own; it prints only the line naming the agent the next step
@@ -50,7 +51,8 @@ cask "barely" do
   # stops and barely is unwired, keeping your images, containers and volumes,
   # and on an upgrade the postflight above wires the new version in again.
   # barely remove records which Docker switches were on, and barely setup
-  # puts them back.
+  # puts them back. Neither touches your shell profile: a DOCKER_HOST line
+  # you turned on stays through an upgrade.
   uninstall quit:   "dev.barely.desktop",
             script: {
               executable: "#{appdir}/Barely.app/Contents/Resources/barely/bin/barely",
