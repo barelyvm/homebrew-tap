@@ -3,10 +3,10 @@
 # Spotlight and Launchpad find it, and the app finishes the install when it is
 # first opened. A formula can only write inside Homebrew's own folder.
 cask "barely" do
-  version "2026.11.19-1af2506"
-  sha256 "e4034d74cafcf1913c224b30ef0db5b328a97acc505ba0c6959cbb0927ad48c6"
+  version "2026.11.20-8327aa5"
+  sha256 "b130c603afaeaca45a8d80b0ccf0dbec3a5b4e981d98ff0de4d6f106bd72b47a"
 
-  url "https://releases.barely.dev/2026.11.19-1af2506/barely-app-2026.11.19-1af2506-darwin-arm64.tar.gz"
+  url "https://releases.barely.dev/2026.11.20-8327aa5/barely-app-2026.11.20-8327aa5-darwin-arm64.tar.gz"
   name "Barely"
   desc "Memory friendly container manager for Docker"
   homepage "https://barely.dev"
@@ -33,7 +33,7 @@ cask "barely" do
   # context. It never writes your shell profile, which is yours. barely runs
   # from inside the app; nothing is copied out of it.
   # Homebrew runs these steps sandboxed, writing only to the paths each step
-  # names, and with a throwaway HOME, which setup -no-load sets aside for the
+  # names, and with a throwaway HOME, which setup --no-load sets aside for the
   # account's own; it prints only the line naming the agent the next step
   # loads. launchd refuses to load an agent from inside the sandbox, so the
   # last step loads it outside, as root for your login session, which asks
@@ -41,10 +41,10 @@ cask "barely" do
   postflight_steps do
     run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/Barely.app"],
                           writable_paths: ["{{appdir}}/Barely.app"]
-    run "{{appdir}}/Barely.app/Contents/Resources/barely/bin/barely", args: ["setup", "-no-load"],
+    run "{{appdir}}/Barely.app/Contents/Resources/barely/bin/barely", args: ["setup", "--no-load"],
                                                                      writable_paths: ["~/.barely", "~/Library/LaunchAgents", "~/.docker"],
                                                                      print_stdout: true
-    run "{{appdir}}/Barely.app/Contents/Resources/barely/bin/barely", args: ["setup", "-load"], sudo: true
+    run "{{appdir}}/Barely.app/Contents/Resources/barely/bin/barely", args: ["setup", "--load"], sudo: true
   end
 
   # Homebrew runs this on brew upgrade as well as brew uninstall: the engine
@@ -56,7 +56,7 @@ cask "barely" do
   uninstall quit:   "dev.barely.desktop",
             script: {
               executable: "#{appdir}/Barely.app/Contents/Resources/barely/bin/barely",
-              args:       ["remove", "-quiet"],
+              args:       ["remove", "--quiet"],
             }
 
   # brew uninstall --zap: also the VM's disk, with every image, container and
