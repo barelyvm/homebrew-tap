@@ -3,10 +3,10 @@
 # Spotlight and Launchpad find it, and the app finishes the install when it is
 # first opened. A formula can only write inside Homebrew's own folder.
 cask "barely" do
-  version "2026.11.20-8327aa5"
-  sha256 "b130c603afaeaca45a8d80b0ccf0dbec3a5b4e981d98ff0de4d6f106bd72b47a"
+  version "2026.11.20-bbc7f7a"
+  sha256 "a05452ad68a04e3def4af3d08caec8f4f3a57f4a83bacf75c82f2a3364e07b87"
 
-  url "https://releases.barely.dev/2026.11.20-8327aa5/barely-app-2026.11.20-8327aa5-darwin-arm64.tar.gz"
+  url "https://releases.barely.dev/2026.11.20-bbc7f7a/barely-app-2026.11.20-bbc7f7a-darwin-arm64.tar.gz"
   name "Barely"
   desc "Memory friendly container manager for Docker"
   homepage "https://barely.dev"
