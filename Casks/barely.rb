@@ -3,10 +3,10 @@
 # Spotlight and Launchpad find it, and the app finishes the install when it is
 # first opened. A formula can only write inside Homebrew's own folder.
 cask "barely" do
-  version "2026.11.24-076fd8d"
-  sha256 "d13f4f3997eb6a8c208e5543de6c28dc5221aec372e0499b4dc488bc179693c7"
+  version "2026.11.25-2b442dd"
+  sha256 "22cfd775d4e3981d406b143bb9127b4705be9573bf05d8dc37ba2a530ce88de9"
 
-  url "https://releases.barely.dev/2026.11.24-076fd8d/barely-app-2026.11.24-076fd8d-darwin-arm64.tar.gz"
+  url "https://releases.barely.dev/2026.11.25-2b442dd/barely-app-2026.11.25-2b442dd-darwin-arm64.tar.gz"
   name "Barely"
   desc "Memory friendly container manager for Docker"
   homepage "https://barely.dev"
@@ -37,7 +37,9 @@ cask "barely" do
   # account's own; it prints only the line naming the agent the next step
   # loads. launchd refuses to load an agent from inside the sandbox, so the
   # last step loads it outside, as root for your login session, which asks
-  # for your password.
+  # for your password. If the /var/run/docker.sock link was on before an
+  # upgrade, that root step makes it again: the sandboxed step can't ask for
+  # a password, and barely never runs sudo where it can't ask properly.
   postflight_steps do
     run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/Barely.app"],
                           writable_paths: ["{{appdir}}/Barely.app"]
@@ -58,6 +60,16 @@ cask "barely" do
               executable: "#{appdir}/Barely.app/Contents/Resources/barely/bin/barely",
               args:       ["remove", "--quiet"],
             }
+
+  # The /var/run/docker.sock link, if it still points at barely. barely
+  # remove leaves it: Homebrew runs the uninstall script in a process group
+  # of its own, where a sudo can't turn the terminal's echo off, so the
+  # password would show as it was typed and never be read. Homebrew removes
+  # it here with its own sudo, which asks properly, and only when the link is
+  # barely's; on an upgrade, the new version's setup --load makes it again.
+  uninstall_postflight_steps do
+    remove "/var/run/docker.sock", symlink_target_contains: "/.barely/docker.sock", sudo: :if_needed
+  end
 
   # brew uninstall --zap: also the VM's disk, with every image, container and
   # volume, the licence and the settings.
